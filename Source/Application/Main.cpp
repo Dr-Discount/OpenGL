@@ -13,6 +13,17 @@ int main(int argc, char* argv[]) {
     SDL_Event e;
     bool quit = false;
 
+    std::vector<neu::vec3> points {
+        {-0.5f, 0.3f, 0 },
+        {0.9f, 0.7f, 0 },
+        {-0.4f, -0.9f, 0 }
+    };
+    std::vector<neu::vec3> colors{
+        {0, 1, 0},
+        {0, 0, 1},
+        {0, 1, 0}
+	};
+
     // MAIN LOOP
     while (!quit) {
         while (SDL_PollEvent(&e)) {
@@ -31,15 +42,18 @@ int main(int argc, char* argv[]) {
         neu::GetEngine().GetRenderer().SetColor(color.r, color.g, color.b);
         neu::GetEngine().GetRenderer().Clear();
 
+        glLoadIdentity();
+        glPushMatrix();
+        glTranslatef(0, 0, 0);
+		glRotatef(60.0f * neu::GetEngine().GetTime().GetTime(), 0, 0, 1);
+
         glBegin(GL_TRIANGLES);
+        for (size_t i = 0; i < points.size(); i++) {
+            glColor3f(colors[i].r, colors[i].g, colors[i].b);
+            glVertex3f(points[i].x, points[i].y, points[i].z);
+        }
 
-        glColor3f(0,1,0);
-        glVertex3f(-0.5, 0.3, 0);
-        glColor3f(0, 0, 1);
-        glVertex3f(0.6f, 0.7f, 0);
-        glColor3f(0, 1, 0);
-        glVertex3f(-0.7f, -0.9f, 0);
-
+        glPopMatrix();
         glEnd();
 
         neu::GetEngine().GetRenderer().Present();

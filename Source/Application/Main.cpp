@@ -52,9 +52,22 @@ int main(int argc, char* argv[]) {
             glColor3f(colors[i].r, colors[i].g, colors[i].b);
             glVertex3f(points[i].x, points[i].y, points[i].z);
         }
-
         glPopMatrix();
         glEnd();
+        
+        glBegin(GL_LINES);
+        glColor3f(1, 0, 0);
+		glVertex3f(-1, 0, 0);
+        glColor3f(0, 0, 1);
+		glVertex3f(1, 0, 0);
+
+        glColor3f(1, 0, 0);
+        glVertex3f(0, -1, 0);
+        glColor3f(0, 0, 1);
+        glVertex3f(0, 1, 0);
+        glEnd();
+
+
 
         neu::GetEngine().GetRenderer().Present();
     }

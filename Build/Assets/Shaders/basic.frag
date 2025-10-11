@@ -1,8 +1,11 @@
 #version 460 core
 
-//in vec2 ocolor;
+in vec3 v_color;
 out vec4 fcolor;
 
+uniform float u_time;
+
 void main() {
-	fcolor = vec4(1, 0, 0, 1);
+	//float offset = sin(u_time + gl_FragCoord.y);
+	fcolor = vec4(v_color, 1);
 }

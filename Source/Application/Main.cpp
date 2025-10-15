@@ -96,57 +96,17 @@ int main(int argc, char* argv[]) {
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, textcord));
 
-    //vertex shader
-    std::string vs_source;
-	neu::file::ReadTextFile("Shaders/Basic.vert", vs_source);
-	const char* vs_cstr = vs_source.c_str();
-    
-	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vs, 1, &vs_cstr, nullptr);
-	glCompileShader(vs);
-
-	//check for vetex compile errors
-    int success;
-    glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        std::string infoLog(512, '\0');  // pre-allocate space
-        GLsizei length;
-        glGetShaderInfoLog(vs, (GLsizei)infoLog.size(), &length, &infoLog[0]);
-        infoLog.resize(length);
-
-        LOG_WARNING("Shader compilation failed: {}", infoLog);
-    } else {
-        LOG_INFO("Shader compilation succeeded");
-	}
-
-	//fragment shader
-	std::string fs_source;
-	neu::file::ReadTextFile("Shaders/Basic.frag", fs_source);
-	const char* fs_cstr = fs_source.c_str();
-
-	GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fs, 1, &fs_cstr, nullptr);
-	glCompileShader(fs);
-
-	//check for fragment compile errors
-    glGetShaderiv(fs, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        std::string infoLog(512, '\0');  // pre-allocate space
-        GLsizei length;
-        glGetShaderInfoLog(fs, (GLsizei)infoLog.size(), &length, &infoLog[0]);
-        infoLog.resize(length);
-
-        LOG_WARNING("Shader compilation failed: {}", infoLog);
-    } else {
-        LOG_INFO("Shader compilation succeeded");
-    }
+    //shaders     
+    auto vs = neu::Resources().Get<neu::Shader>("Shaders/basic.vert", GL_VERTEX_SHADER);
+    auto fs = neu::Resources().Get<neu::Shader>("Shaders/basic.frag", GL_FRAGMENT_SHADER);
 
     //Program
 	GLuint program = glCreateProgram();
-	glAttachShader(program, vs);
-	glAttachShader(program, fs);
+	glAttachShader(program, vs->m_shader);
+	glAttachShader(program, fs->m_shader);
 	glLinkProgram(program);
 
+    int success;
     glGetProgramiv(program, GL_LINK_STATUS, &success);
     if (!success)
     {

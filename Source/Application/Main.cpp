@@ -101,18 +101,19 @@ int main(int argc, char* argv[]) {
     auto fs = neu::Resources().Get<neu::Shader>("Shaders/basic.frag", GL_FRAGMENT_SHADER);
 
     //Program
-	GLuint program = glCreateProgram();
-	glAttachShader(program, vs->m_shader);
-	glAttachShader(program, fs->m_shader);
-	glLinkProgram(program);
+    auto program = std::make_shared<neu::Program>();
+    program->AttachShader(vs);
+    program->AttachShader(fs);
+    program->Link();
+    program->Use();
 
     int success;
-    glGetProgramiv(program, GL_LINK_STATUS, &success);
+    glGetProgramiv(program->m_program, GL_LINK_STATUS, &success);
     if (!success)
     {
         std::string infoLog(512, '\0');  // pre-allocate space
         GLsizei length;
-        glGetProgramInfoLog(program, (GLsizei)infoLog.size(), &length, &infoLog[0]);
+        glGetProgramInfoLog(program->m_program, (GLsizei)infoLog.size(), &length, &infoLog[0]);
         infoLog.resize(length);
 
         LOG_WARNING("program linked failed: {}", infoLog);
@@ -120,15 +121,15 @@ int main(int argc, char* argv[]) {
 		LOG_INFO("Program linked succeeded");
     }
 
-	glUseProgram(program);
+	glUseProgram(program->m_program);
 
     //texture
 	neu::res_t<neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/hornet.png");
     
     //uniform
-	GLint uniform = glGetUniformLocation(program, "u_time");
+	GLint uniform = glGetUniformLocation(program->m_program, "u_time");
 
-	GLint tex_Uniform = glGetUniformLocation(program, "u_texture");
+	GLint tex_Uniform = glGetUniformLocation(program->m_program, "u_texture");
 	glUniform1d(tex_Uniform, 0);
 
     // MAIN LOOP

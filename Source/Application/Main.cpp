@@ -1,4 +1,3 @@
-
 int main(int argc, char* argv[]) {
     neu::file::SetCurrentDirectory("Assets");
     LOG_INFO("current directory {}", neu::file::GetCurrentDirectory());
@@ -14,25 +13,40 @@ int main(int argc, char* argv[]) {
     bool quit = false;
     
 	//openGL setup
-    std::vector<neu::vec3> points {
-        {-0.5f, 0.3f, 0 },
-        {0.9f, 0.7f, 0 },
-        {-0.4f, -0.9f, 0 }
+    std::vector<neu::vec3> points { {-0.5f, 0.3f, 0 }, {0.9f, 0.7f, 0 }, {-0.4f, -0.9f, 0 }};
+    std::vector<neu::vec3> colors{ {0, 1, 0}, {0, 0, 1}, {0, 1, 0}};
+    std::vector<neu::vec2> textcords{{0, 0}, {0.5f, -1}, {1, 1}};
+
+    struct Vertex {
+        neu::vec3 position;
+        neu::vec3 color;
+		neu::vec2 textcord;
     };
-    std::vector<neu::vec3> colors{
-        {0, 1, 0},
-        {0, 0, 1},
-        {0, 1, 0}
+
+    std::vector<Vertex> vertices{
+        {{-0.5f, -0.5f, 0 }, {0, 1, 0}, {0, 0} },
+        {{-0.5f, 0.5f, 0 }, {0, 0, 1}, {0, 1} },
+        {{0.5f, 0.5f, 0 }, {0, 1, 0}, {1, 1}},
+        {{0.5f, -0.5f, 0 }, {0, 0, 1}, {1, 0}},
+    };
+
+    std::vector<unsigned int> indices{
+        0, 1, 2,
+        0, 2, 3
 	};
 
-    GLuint vbo[2];
-    glGenBuffers(2, vbo);
+    /*
+    GLuint vbo[3];
+    glGenBuffers(3, vbo);
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 	glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(neu::vec3), points.data(), GL_STATIC_DRAW);
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-    glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(neu::vec3), colors.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, colors.size() * sizeof(neu::vec3), colors.data(), GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
+    glBufferData(GL_ARRAY_BUFFER, textcords.size() * sizeof(neu::vec2), textcords.data(), GL_STATIC_DRAW);
 
     GLuint vao;
 	glGenVertexArrays(1, &vao);
@@ -47,6 +61,40 @@ int main(int argc, char* argv[]) {
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+	//textcord
+	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+    */
+
+	//vertex buffer
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
+
+	//index buffer
+	GLuint ibo;
+	glGenBuffers(1, &ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
+
+    //vertex array
+	GLuint vao;
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, textcord));
 
     //vertex shader
     std::string vs_source;
@@ -113,10 +161,15 @@ int main(int argc, char* argv[]) {
     }
 
 	glUseProgram(program);
+
+    //texture
+	neu::res_t<neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/hornet.png");
     
     //uniform
 	GLint uniform = glGetUniformLocation(program, "u_time");
-    ASSERT(uniform != -1);
+
+	GLint tex_Uniform = glGetUniformLocation(program, "u_texture");
+	glUniform1d(tex_Uniform, 0);
 
     // MAIN LOOP
     while (!quit) {
@@ -133,37 +186,13 @@ int main(int argc, char* argv[]) {
 		glUniform1f(uniform, neu::GetEngine().GetTime().GetTime());
 
         // draw
-        neu::vec3 color{ 0, 0, 0 };
-        neu::GetEngine().GetRenderer().SetColor(color.r, color.g, color.b);
+        //neu::vec3 color{ 0, 0, 0 };
+        //neu::GetEngine().GetRenderer().SetColor(color.r, color.g, color.b);
         neu::GetEngine().GetRenderer().Clear();
 
 		glBindVertexArray(vao);
-		glDrawArrays(GL_TRIANGLES, 0, (GLsizei)points.size());
-
-        /*glLoadIdentity();
-        glPushMatrix();
-        glTranslatef(0, 0, 0);
-		glRotatef(60.0f * neu::GetEngine().GetTime().GetTime(), 0, 0, 1);
-
-        glBegin(GL_TRIANGLES);
-        for (size_t i = 0; i < points.size(); i++) {
-            glColor3f(colors[i].r, colors[i].g, colors[i].b);
-            glVertex3f(points[i].x, points[i].y, points[i].z);
-        }
-        glPopMatrix();
-        glEnd();
-        
-        glBegin(GL_LINES);
-        glColor3f(1, 0, 0);
-		glVertex3f(-1, 0, 0);
-        glColor3f(0, 0, 1);
-		glVertex3f(1, 0, 0);
-
-        glColor3f(1, 0, 0);
-        glVertex3f(0, -1, 0);
-        glColor3f(0, 0, 1);
-        glVertex3f(0, 1, 0);
-        glEnd();*/
+		//glDrawArrays(GL_TRIANGLES, 0, (GLsizei)points.size());
+		glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_INT, 0);
 
         neu::GetEngine().GetRenderer().Present();
     }

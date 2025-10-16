@@ -81,6 +81,7 @@ int main(int argc, char* argv[]) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
 
+
     //vertex array
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
@@ -129,6 +130,15 @@ int main(int argc, char* argv[]) {
     //uniform
 	GLint uniform = glGetUniformLocation(program->m_program, "u_time");
 
+    //transformation
+    float rotation = 0;
+	glm::vec3 eye{ 0, 0, 3 };
+
+    //projection matrix
+    float aspect = neu::GetEngine().GetRenderer().GetWidth() / (float)neu::GetEngine().GetRenderer().GetHeight();
+    glm::mat4 projection = glm::perspective(glm::radians(90.0f), aspect, 0.1f, 100.0f);
+    program->SetUniform("u_projection", projection);
+
 	GLint tex_Uniform = glGetUniformLocation(program->m_program, "u_texture");
 	glUniform1d(tex_Uniform, 0);
 
@@ -146,13 +156,27 @@ int main(int argc, char* argv[]) {
         if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 		glUniform1f(uniform, neu::GetEngine().GetTime().GetTime());
 
+		rotation += neu::GetEngine().GetTime().GetDeltaTime() * 90;
+
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::rotate(model, glm::radians(rotation), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+        model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
+        program->SetUniform("u_model", model);
+
+
+		//view matrix
+        eye.x += neu::GetEngine().GetInput().GetMouseDelta().x * 0.01f;
+        eye.z += neu::GetEngine().GetInput().GetMouseDelta().y * 0.01f;
+		glm::mat4 view = glm::lookAt(eye, eye + glm::vec3{0, 0, -1}, glm::vec3{0, 1, 0});
+		program->SetUniform("u_view", view);
+
+		
+
         // draw
-        //neu::vec3 color{ 0, 0, 0 };
-        //neu::GetEngine().GetRenderer().SetColor(color.r, color.g, color.b);
         neu::GetEngine().GetRenderer().Clear();
 
 		glBindVertexArray(vao);
-		//glDrawArrays(GL_TRIANGLES, 0, (GLsizei)points.size());
 		glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_INT, 0);
 
         neu::GetEngine().GetRenderer().Present();

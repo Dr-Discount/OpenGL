@@ -30,6 +30,9 @@ int main(int argc, char* argv[]) {
         {{0.5f, -0.5f, 0 }, {0, 0, 1}, {1, 0}},
     };
 
+    auto model3d = std::make_shared<neu::Model>();
+    model3d->Load("models/sphere.obj");
+
     std::vector<GLushort> indices{ 0, 1, 2, 0, 2, 3 };
 
     /*
@@ -183,7 +186,8 @@ int main(int argc, char* argv[]) {
         // draw
         neu::GetEngine().GetRenderer().Clear();
 
-		vb->Draw(GL_TRIANGLES);
+		//vb->Draw(GL_TRIANGLES);
+        model3d->Draw(GL_TRIANGLES);
 
         neu::GetEngine().GetRenderer().Present();
     }

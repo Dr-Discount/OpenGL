@@ -247,6 +247,7 @@
     <ClInclude Include="Framework\Object.h" />
     <ClInclude Include="Framework\Scene.h" />
     <ClInclude Include="Input\InputSystem.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Math\Math.h" />
     <ClInclude Include="Math\Rect.h" />
     <ClInclude Include="Math\Transform.h" />

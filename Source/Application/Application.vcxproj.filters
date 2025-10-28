@@ -20,6 +20,9 @@
     <Filter Include="Assets\Textures">
       <UniqueIdentifier>{cd5a2515-9f1b-4b19-9880-7afe85b3d3c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Materials">
+      <UniqueIdentifier>{d7c2afa9-8221-4a05-9d9f-a50d79624e65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -63,6 +66,18 @@
       <Filter>Assets\Shaders</Filter>
     </None>
     <None Include="..\..\Build\Assets\Shaders\basic_lit.prog">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\hornet.mat">
+      <Filter>Assets\Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\basic_phong.frag">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\basic_phong.prog">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\basic_phong.vert">
       <Filter>Assets\Shaders</Filter>
     </None>
   </ItemGroup>

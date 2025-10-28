@@ -16,38 +16,16 @@ int main(int argc, char* argv[]) {
     auto model3d = std::make_shared<neu::Model>();
     model3d->Load("models/sphere.obj");
 
-    //shaders     
-    /*auto vs = neu::Resources().Get<neu::Shader>("Shaders/basic_lit.vert", GL_VERTEX_SHADER);
-    auto fs = neu::Resources().Get<neu::Shader>("Shaders/basic_lit.frag", GL_FRAGMENT_SHADER);*/
+    //material
+    auto material = neu::Resources().Get<neu::Material>("materials/hornet.mat");
+	material->Bind();
 
-    //Program
-    auto program = neu::Resources().Get<neu::Program>("shaders/basic_lit.prog");
-    program->Use();
-
-    int success;
-    glGetProgramiv(program->m_program, GL_LINK_STATUS, &success);
-    if (!success)
-    {
-        std::string infoLog(512, '\0');  // pre-allocate space
-        GLsizei length;
-        glGetProgramInfoLog(program->m_program, (GLsizei)infoLog.size(), &length, &infoLog[0]);
-        infoLog.resize(length);
-
-        LOG_WARNING("program linked failed: {}", infoLog);
-    } else {
-		LOG_INFO("Program linked succeeded");
-    }
-
-	glUseProgram(program->m_program);
-
-    //texture
-	neu::res_t<neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/hornet.png");
-
-	GLint uniform = glGetUniformLocation(program->m_program, "u_time");
+	GLint uniform = glGetUniformLocation(material->program->m_program, "u_time");
 
     //lights
-    program->SetUniform("u_ambient_light", glm::vec3{ 0.2, 0.2, 0.2 });
+    material->program->SetUniform("u_ambient_light", glm::vec3{ 0.2, 0.2, 0.2 });
 	neu::Transform light{ { 0, 5,  5} };
+	glm::vec3 lightColor{ 1 };
 
     //transformation
     neu::Transform transform{ {1,0,0} };
@@ -56,9 +34,9 @@ int main(int argc, char* argv[]) {
     //projection matrix
     float aspect = neu::GetEngine().GetRenderer().GetWidth() / (float)neu::GetEngine().GetRenderer().GetHeight();
     glm::mat4 projection = glm::perspective(glm::radians(90.0f), aspect, 0.1f, 100.0f);
-    program->SetUniform("u_projection", projection);
+    material->program->SetUniform("u_projection", projection);
 
-	GLint tex_Uniform = glGetUniformLocation(program->m_program, "u_texture");
+	GLint tex_Uniform = glGetUniformLocation(material->program->m_program, "u_texture");
 	glUniform1d(tex_Uniform, 0);
 
     // MAIN LOOP
@@ -67,6 +45,7 @@ int main(int argc, char* argv[]) {
             if (e.type == SDL_EVENT_QUIT) {
                 quit = true;
             }
+		    ImGui_ImplSDL3_ProcessEvent(&e);
         }
 
         // update
@@ -83,18 +62,37 @@ int main(int argc, char* argv[]) {
         if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) camera.position.y += speed * neu::GetEngine().GetTime().GetDeltaTime();
 
 		//model transform
-        program->SetUniform("u_model", transform.GetMatrix());
+        material->program->SetUniform("u_model", transform.GetMatrix());
 
 		//view matrix
 		glm::mat4 view = glm::lookAt(camera.position, camera.position + glm::vec3{0, 0, -1}, glm::vec3{0, 1, 0});
-		program->SetUniform("u_view", view);
+		material->program->SetUniform("u_view", view);
 
-		program->SetUniform("u_light.position", (glm::vec3)(view * glm::vec4(light.position, 1)));
+		material->program->SetUniform("u_light.position", (glm::vec3)(view * glm::vec4(light.position, 1)));
 		light.position.x = neu::math::sin(neu::GetEngine().GetTime().GetTime() * 4) * 5.0f;
-        program->SetUniform("u_light.color", glm::vec3{ 1, 1, 1 });
+        material->program->SetUniform("u_light.color", lightColor);
 
         // draw
         neu::GetEngine().GetRenderer().Clear();
+
+        // start new ImGui frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplSDL3_NewFrame();
+        ImGui::NewFrame();
+
+        // set ImGui
+        ImGui::Begin("Editor");
+		ImGui::DragFloat3("position", glm::value_ptr(light.position), 0.1f);
+        ImGui::ColorEdit3("color", glm::value_ptr(lightColor));
+		transform.updateGUI();
+		material->updateGUI();
+        ImGui::End();
+
+        model3d->Draw(GL_TRIANGLES);
+
+        // draw ImGui
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		//vb->Draw(GL_TRIANGLES);
         model3d->Draw(GL_TRIANGLES);

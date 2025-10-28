@@ -53,6 +53,7 @@
 #include "Renderer/VertexBuffer.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Program.h"
+#include "Renderer/Material.h"
 
 // physics
 #include "Physics/Collidable.h"

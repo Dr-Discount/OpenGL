@@ -52,7 +52,7 @@ namespace neu {
 		program->SetUniform("u_material.offset", offset);
 	}
 
-	void Material::updateGUI() {
+	void Material::UpdateGui() {
 		if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_DefaultOpen)) {
 			ImGui::Text("Name: %s", name.c_str());
 			ImGui::Text("Shader: %s", program->name.c_str());

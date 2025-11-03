@@ -3,6 +3,6 @@
 namespace neu {
 	class GUI {
 	public:
-		virtual void updateGUI() = 0;
+		virtual void UpdateGui() = 0;
 	};
 }

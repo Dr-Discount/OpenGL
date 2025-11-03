@@ -204,11 +204,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Build\Assets\Materials\hornet.mat" />
+    <None Include="..\..\Build\Assets\Materials\pumpkin.mat" />
     <None Include="..\..\Build\Assets\Meshes\enemy.msh" />
     <None Include="..\..\Build\Assets\Platformer\Scenes\level.json" />
     <None Include="..\..\Build\Assets\Platformer\Scenes\prototypes.json" />
     <None Include="..\..\Build\Assets\Platformer\Tilemaps\tilemap.json" />
     <None Include="..\..\Build\Assets\scene.json" />
+    <None Include="..\..\Build\Assets\Scenes\scene01.json" />
     <None Include="..\..\Build\Assets\Shaders\basic.frag" />
     <None Include="..\..\Build\Assets\Shaders\basic.vert" />
     <None Include="..\..\Build\Assets\Shaders\basic_lit.frag" />

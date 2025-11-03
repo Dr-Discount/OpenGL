@@ -15,7 +15,7 @@ namespace neu {
 		bool Load(const std::string& filename);
 		void Bind();
 
-		void updateGUI() override;
+		void UpdateGui() override;
 
 	public:
 

@@ -1,0 +1,119 @@
+{
+  "actors": [
+    {
+      "name": "knife",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, -2, 2 ],
+        "rotation": [ 0, 0, 1.6 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "models/Halloween01/Butcher_Knife.fbx",
+          "material": "materials/pumpkin.mat"
+        }
+      ]
+    },
+    {
+      "name": "pumpkin",
+      "persistent": true,
+      "transform": {
+        "position": [ 2, -3, -1 ],
+        "rotation": [ 0, 180, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "models/Halloween01/pumpkin.fbx",
+          "material": "materials/pumpkin.mat"
+        }
+      ]
+    },
+    {
+      "name": "skull",
+      "persistent": true,
+      "transform": {
+        "position": [ 2, 2, -1 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "models/Halloween01/Skull_Jaw.fbx",
+          "material": "materials/pumpkin.mat"
+        }
+      ]
+    },
+    {
+      "name": "cross",
+      "persistent": true,
+      "transform": {
+        "position": [ -5, -2, -5 ],
+        "rotation": [ 0, 180, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "models/Halloween01/Gravestone_Cross.fbx",
+          "material": "materials/pumpkin.mat"
+        }
+      ]
+    },
+    {
+      "name": "spellbook",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, 0, 0 ],
+        "rotation": [ 1, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "models/Halloween01/Spellbook_Open.fbx",
+          "material": "materials/pumpkin.mat"
+        }
+      ]
+    },
+    {
+      "name": "camera",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, 0, 5 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "CameraComponent"
+        },
+        {
+          "type": "FirstPersonController",
+          "speed": 5,
+          "sensitivity": 0.2
+        }
+
+      ]
+    },
+    {
+      "name": "light",
+      "persistent": true,
+      "transform": {
+        "position": [ 5, 5, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "color": [ 0, 0, 2 ]
+        }
+      ]
+    }
+  ]
+}

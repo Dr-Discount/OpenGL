@@ -2,7 +2,7 @@
 	"program": "shaders/basic_phong.prog",
 	"baseMap": "textures/hornet.png",
   "baseColor": [ 0, 0, 1],
-	"shininess": 128,
+	"shininess": 4,
 	"tiling": [1, 1],
 	"offset": [0, 0]
 }

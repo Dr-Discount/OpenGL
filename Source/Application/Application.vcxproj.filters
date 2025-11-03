@@ -23,6 +23,9 @@
     <Filter Include="Assets\Materials">
       <UniqueIdentifier>{d7c2afa9-8221-4a05-9d9f-a50d79624e65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Scenes">
+      <UniqueIdentifier>{a55e8a6a-ca05-4100-8d97-1f8dd2ba861c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -79,6 +82,12 @@
     </None>
     <None Include="..\..\Build\Assets\Shaders\basic_phong.vert">
       <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Scenes\scene01.json">
+      <Filter>Assets\Scenes</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\pumpkin.mat">
+      <Filter>Assets\Materials</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

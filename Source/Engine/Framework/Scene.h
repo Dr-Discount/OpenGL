@@ -54,7 +54,7 @@ namespace neu {
     /// }
     /// ```
     /// </summary>
-    class Scene : public Object {
+    class Scene {
     public:
         /// <summary>
         /// Constructs a scene with a reference to the parent game instance.
@@ -72,11 +72,11 @@ namespace neu {
 
         // Override from Object base class
         // Initializes all actors after scene is fully loaded
-        bool Start() override;
+        bool Start();
 
         // Override from Object base class
         // Cleans up all actors before scene destruction
-        void Destroyed() override;
+        void Destroyed();
 
         /// <summary>
         /// Loads a complete scene from a named configuration file.
@@ -112,7 +112,7 @@ namespace neu {
         /// - Factory integration for type-safe actor creation
         /// </summary>
         /// <param name="value">Serialized data containing scene configuration</param>
-        void Read(const serial_data_t& value) override;
+        void Read(const serial_data_t& value);
 
         /// <summary>
         /// Updates all active actors in the scene for the current frame.

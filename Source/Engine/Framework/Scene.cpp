@@ -78,11 +78,14 @@ namespace neu {
     /// </summary>
     /// <param name="renderer">The renderer used to draw the actors.</param>
     void Scene::Draw(Renderer& renderer) {
-        LightComponent* light = nullptr;
+        std::vector<LightComponent*> lights;
         for (auto& actor : m_actors) {
             if (!actor->active) continue;
-			light = actor->GetComponent<LightComponent>();
-            if (light) break;
+
+			auto light = actor->GetComponent<LightComponent>();
+            if (light && light->active) {
+                lights.push_back(light);
+            }
 		}
 
 		CameraComponent* camera = nullptr;
@@ -107,11 +110,20 @@ namespace neu {
             }
         }
 
+        glm::vec3 m_ambientLight{ 0.2f, 0.2f, 0.2f };
+
         for (auto& program : programs) {
 			program->Use();
-			program->SetUniform("u_ambient_light", glm::vec3{ 0.2f });
+			program->SetUniform("u_ambient_light", m_ambientLight);
+            program->SetUniform("u_numLights", (int)lights.size());
 			camera->SetProgram(*program);
-			if (light) light->SetProgram(*program, "u_light", camera->view);
+
+            int index = 0;
+            for (auto light : lights) {
+                std::string lightName = "u_lights[" + std::to_string(index) + "]";
+			    if (light) light->SetProgram(*program, lightName, camera->view);
+                index += 1;
+            }
         }
 
         // Iterate through all actors in the scene
@@ -228,6 +240,8 @@ namespace neu {
         // unique_ptr ensures all actors are properly deleted
         m_actors.clear();
     }
+
+    void Scene::UpdateGui() {}
 
     /// <summary>
     /// Loads a complete scene from a named configuration file.

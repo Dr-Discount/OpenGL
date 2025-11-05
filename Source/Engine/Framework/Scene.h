@@ -96,6 +96,9 @@ namespace neu {
         /// </summary>
         /// <param name="sceneName">Name/path of the scene file to load</param>
         /// <returns>True if the scene loaded successfully, false on any error</returns>
+        
+        void UpdateGui();
+        
         bool Load(const std::string& sceneName);
 
         /// <summary>
@@ -282,7 +285,7 @@ namespace neu {
         std::vector<T*> GetActorsByTag(const std::string& tag);
 
     private:
-
+        friend class Editor;
         /// <summary>
         /// Container for all actors in the scene.
         /// 

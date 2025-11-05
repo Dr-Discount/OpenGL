@@ -8,19 +8,19 @@ namespace neu {
 	// Essential for serialization and data-driven content loading
 	FACTORY_REGISTER(Actor)
 
-	/// <summary>
-	/// Copy constructor - creates a deep copy of an actor.
-	/// 
-	/// Performs a complete clone of the actor, including all components.
-	/// Each component is individually cloned to ensure independence between
-	/// the original and copy. This is essential for prototype-based spawning
-	/// where multiple actors are created from a single template.
-	/// </summary>
-	Actor::Actor(const Actor& other) :
-	Object{ other },              // Copy base Object properties (name, active)
-	tag{ other.tag },             // Copy tag for grouping
-	lifespan{ other.lifespan },   // Copy lifespan setting
-	transform{ other.transform }  // Copy spatial information
+		/// <summary>
+		/// Copy constructor - creates a deep copy of an actor.
+		/// 
+		/// Performs a complete clone of the actor, including all components.
+		/// Each component is individually cloned to ensure independence between
+		/// the original and copy. This is essential for prototype-based spawning
+		/// where multiple actors are created from a single template.
+		/// </summary>
+		Actor::Actor(const Actor& other) :
+		Object{ other },              // Copy base Object properties (name, active)
+		tag{ other.tag },             // Copy tag for grouping
+		lifespan{ other.lifespan },   // Copy lifespan setting
+		transform{ other.transform }  // Copy spatial information
 	{
 		// Deep copy all components from the source actor
 		// Each component must be cloned individually to avoid shared ownership
@@ -152,6 +152,21 @@ namespace neu {
 		m_components.push_back(std::move(component));
 	}
 
+	void Actor::UpdateGui() {
+		ImGui::Text("Name: %s", name.c_str());
+		ImGui::Text("Tag: %s", tag.c_str());
+		ImGui::Checkbox("Active", &active);
+		// transform information
+		ImGui::Separator();
+		transform.UpdateGui();
+
+		for (auto& component : m_components) {
+			ImGui::Separator();
+			if (ImGui::CollapsingHeader(component->GetClassName(), ImGuiTreeNodeFlags_DefaultOpen)) {
+				component->UpdateGui();
+			}
+		}
+	}
 	/// <summary>
 	/// Deserializes actor data from configuration files.
 	/// 

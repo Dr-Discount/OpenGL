@@ -45,6 +45,8 @@ namespace neu {
 		// Useful for temporary effects, projectiles, particles
 		float lifespan{ 0 };
 
+		void UpdateGui();
+
 		// Back-reference to containing scene (non-owning pointer)
 		// Allows actors to query other actors and access scene-level systems
 		// Set by Scene::AddActor(), nullptr before actor is added to scene

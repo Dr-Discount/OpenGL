@@ -36,7 +36,9 @@
 /// - Use this macro for classes that need prototype/cloning functionality
 /// </summary>
 /// <param name="classname">The name of the derived class implementing Clone()</param>
-#define CLASS_PROTOTYPE(classname) virtual std::unique_ptr<Object> Clone() { return std::make_unique<classname>(*this); }
+#define CLASS_PROTOTYPE(classname) \
+ virtual std::unique_ptr<Object> Clone() { return std::make_unique<classname>(*this); } \
+const char* GetClassName() {return #classname;}
 
 namespace neu {
     /// <summary>
@@ -129,6 +131,8 @@ namespace neu {
         /// initialization in their own constructors or Start() methods.
         /// </summary>
         Object() = default;
+
+        void UpdateGui() {};
 
         /// <summary>
         /// Virtual destructor ensuring proper cleanup of derived class objects.
@@ -303,6 +307,8 @@ namespace neu {
         /// </summary>
         /// <returns>A unique_ptr to a new Object instance that is a deep copy of this object</returns>
         virtual std::unique_ptr<Object> Clone() = 0;
+
+        virtual const char* GetClassName() = 0;
 
         /// <summary>
         /// Deserializes object state from serialized data.

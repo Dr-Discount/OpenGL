@@ -54,6 +54,7 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Program.h"
 #include "Renderer/Material.h"
+#include "Renderer/Editor.h"
 
 // physics
 #include "Physics/Collidable.h"

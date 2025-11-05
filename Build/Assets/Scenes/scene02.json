@@ -111,42 +111,7 @@
       "components": [
         {
           "type": "LightComponent",
-          "color": [ 0, 0, 5 ],
-          "range": 50
-        }
-      ]
-    },
-    {
-      "name": "light2",
-      "persistent": true,
-      "transform": {
-        "position": [ 0, 0, -5 ],
-        "rotation": [ 0, 0, 0 ],
-        "scale": [ 1, 1, 1 ]
-      },
-      "components": [
-        {
-          "type": "LightComponent",
-          "color": [ 1, 0, 1 ],
-          "intensity": 1,
-          "range": 100
-        }
-      ]
-    },
-    {
-      "name": "light3",
-      "persistent": true,
-      "transform": {
-        "position": [ 0, 0, 5 ],
-        "rotation": [ 0, 0, 0 ],
-        "scale": [ 1, 1, 1 ]
-      },
-      "components": [
-        {
-          "type": "LightComponent",
-          "color": [ 0, 1, 0 ],
-          "intensity": 1,
-          "range": 50
+          "color": [ 0, 0, 2 ]
         }
       ]
     }

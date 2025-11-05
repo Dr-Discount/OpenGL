@@ -2,9 +2,14 @@
 #include "Framework/Component.h"
 
 namespace neu {
-	class LightComponent : public Component, GUI
-	{
+	class LightComponent : public Component, GUI {
 	public:
+        enum class LightType {
+            Point, 
+            Directionl,
+            Spot
+        };
+
 		CLASS_PROTOTYPE(LightComponent)
 
 			void Update(float dt) override;
@@ -15,5 +20,10 @@ namespace neu {
 
 	public:
 		glm::vec3 color{ 1, 1, 1 };
+        float intensity{ 1 };
+        float range{ 20 };
+        LightType lightType = LightType::Point;
+
+        float outerCutoff{ 20 };
 	};
 }

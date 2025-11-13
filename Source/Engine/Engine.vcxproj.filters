@@ -146,6 +146,9 @@
     <ClCompile Include="Renderer\Editor.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Cubemap.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Random.h">
@@ -287,6 +290,9 @@
       <Filter>Source\Components</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Editor.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Cubemap.h">
       <Filter>Source\Renderer</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,7 +3,7 @@
 #define MAX_LIGHTS  5
 #define Point       0
 #define Directional 1
-#define Spot        2  
+#define Spot        2
 
 layout (location = 0) in vec3 a_position;
 layout (location = 1) in vec2 a_texcoord;
@@ -29,14 +29,18 @@ struct Light {
 
 uniform int u_numLights = 5;
 uniform Light u_lights[5];
+uniform sampler2D u_baseMap;
+uniform sampler2D u_spcularMap;
+uniform sampler2D u_emissiveMap;
 
 uniform struct Material {
-	sampler2D baseMap;
 	vec3 baseColor;
+    vec3 emissiveColor;
 
 	float shininess;
 	vec2 tiling;
 	vec2 offset;
+    uint parameters;
 } u_material;
 
 float calculateAttenuation(in float l_distance, in float range) {

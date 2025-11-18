@@ -30,7 +30,7 @@
         {
           "type": "ModelRenderer",
           "model": "models/cube.obj",
-          "material": "materials/reflection.mat"
+          "material": "materials/refraction.mat"
         },
         {
           "type": "RotationComponent",

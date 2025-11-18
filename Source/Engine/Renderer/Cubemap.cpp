@@ -52,4 +52,6 @@ namespace neu {
 
         return true;
     }
+
+    void Cubemap::UpdateGui() {}
 }

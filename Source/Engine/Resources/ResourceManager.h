@@ -100,6 +100,10 @@ namespace neu {
         return GetWithID<T>(name, name, std::forward<Args>(args)...);
     }
 
+    template<typename T, typename ...Args>
+        requires std::derived_from<T, Resource>
+    std::vector<T*> GetByType();
+
     /// <summary>
     /// Template implementation for GetWithID() method.
     /// This is the core resource loading and caching logic.
@@ -153,4 +157,9 @@ namespace neu {
     /// </summary>
     /// <returns>Reference to the ResourceManager singleton instance</returns>
     inline ResourceManager& Resources() { return ResourceManager::Instance(); }
+    template<typename T, typename ...Args>
+        requires std::derived_from<T, Resource>
+    std::vector<T*> GetByType() {
+        return std::vector<T*>();
+    }
 }

@@ -39,6 +39,9 @@
     <Filter Include="Source\Physics">
       <UniqueIdentifier>{9ba8352a-461e-4a3f-a351-7ae28744a574}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Gui">
+      <UniqueIdentifier>{d9c84af0-81d5-4bac-a2f5-7a834a99c88f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -110,24 +113,6 @@
     <ClCompile Include="Renderer\Model.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\imgui\imgui.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ThirdParty\imgui\imgui_draw.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ThirdParty\imgui\imgui_tables.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ThirdParty\imgui\imgui_widgets.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ThirdParty\imgui\backends\imgui_impl_sdl3.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ThirdParty\imgui\backends\imgui_impl_opengl3.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\Material.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
@@ -148,6 +133,30 @@
     </ClCompile>
     <ClCompile Include="Renderer\Cubemap.cpp">
       <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\RotationComponent.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui.cpp">
+      <Filter>Source\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_draw.cpp">
+      <Filter>Source\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\backends\imgui_impl_opengl3.cpp">
+      <Filter>Source\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\backends\imgui_impl_sdl3.cpp">
+      <Filter>Source\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_tables.cpp">
+      <Filter>Source\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_widgets.cpp">
+      <Filter>Source\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiFileDialog.cpp">
+      <Filter>Source\Gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -294,6 +303,18 @@
     </ClInclude>
     <ClInclude Include="Renderer\Cubemap.h">
       <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\RotationComponent.h">
+      <Filter>Source\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiFileDialog.h">
+      <Filter>Source\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiFileDialogConfig.h">
+      <Filter>Source\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor.h">
+      <Filter>Source\Gui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,6 +13,7 @@ namespace neu {
 
         glDepthMask(enableDepth);
         glCullFace(cullFace);
+
 		model->Draw(GL_TRIANGLES);
 	}
 

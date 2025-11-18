@@ -1,14 +1,15 @@
 #pragma once
 #include <memory>
+#include <Renderer/GUI.h>
 
-namespace neu {
+namespace neu{
     /// <summary>
     /// Abstract base class for all managed resources in the engine.
     /// This class provides a common interface for resources that can be loaded,
     /// cached, and managed by the ResourceManager. All specific resource types
     /// (textures, sounds, models, etc.) should inherit from this class.
     /// </summary>
-    class Resource {
+    class Resource : public GUI {
     public:
         /// <summary>
         /// Default constructor for resource objects.

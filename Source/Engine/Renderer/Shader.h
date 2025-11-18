@@ -7,6 +7,9 @@ namespace neu {
 		~Shader();
 
 		bool Load(const std::string& filename, GLuint shaderType);
+
+        void UpdateGui() override;
+
 		GLuint m_shader = 0;
 	};
 }

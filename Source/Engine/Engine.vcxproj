@@ -210,6 +210,7 @@
     <ClCompile Include="Components\FirstPersonComponent.cpp" />
     <ClCompile Include="Components\LightComponent.cpp" />
     <ClCompile Include="Components\ModelRenderer.cpp" />
+    <ClCompile Include="Components\PostProcessComponent.cpp" />
     <ClCompile Include="Components\RotationComponent.cpp" />
     <ClCompile Include="Core\File.cpp" />
     <ClCompile Include="Core\Json.cpp" />
@@ -235,6 +236,7 @@
     <ClCompile Include="Renderer\Model.cpp" />
     <ClCompile Include="Renderer\Program.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="Renderer\RenderTexture.cpp" />
     <ClCompile Include="Renderer\Shader.cpp" />
     <ClCompile Include="Renderer\Texture.cpp" />
     <ClCompile Include="Renderer\TextureAnimation.cpp" />
@@ -248,6 +250,7 @@
     <ClInclude Include="Components\FirstPersonComponent.h" />
     <ClInclude Include="Components\LightComponent.h" />
     <ClInclude Include="Components\ModelRenderer.h" />
+    <ClInclude Include="Components\PostProcessComponent.h" />
     <ClInclude Include="Components\RendererComponent.h" />
     <ClInclude Include="Components\RotationComponent.h" />
     <ClInclude Include="Core\Assert.h" />
@@ -287,6 +290,7 @@
     <ClInclude Include="Renderer\Model.h" />
     <ClInclude Include="Renderer\Program.h" />
     <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Renderer\RenderTexture.h" />
     <ClInclude Include="Renderer\Shader.h" />
     <ClInclude Include="Renderer\Texture.h" />
     <ClInclude Include="Renderer\TextureAnimation.h" />

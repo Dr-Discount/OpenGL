@@ -154,6 +154,8 @@ namespace neu {
         /// </summary>
         /// <param name="renderer">Renderer instance used for all drawing operations</param>
         void Draw(class Renderer& renderer);
+        
+        void DrawPass(class Renderer& renderer, std::vector<class Program*>& program, std::vector<class LightComponent*>& lights, class CameraComponent* camera);
 
         /// <summary>
         /// Adds an actor to the scene with optional immediate initialization.
@@ -283,6 +285,9 @@ namespace neu {
         template<typename T = Actor>
             requires std::derived_from<T, Actor>
         std::vector<T*> GetActorsByTag(const std::string& tag);
+
+        glm::vec3 m_ambientLight{ 0.2f, 0.2f, 0.2f };
+        bool m_postProcess = false;
 
     private:
         friend class Editor;

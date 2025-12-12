@@ -56,5 +56,6 @@ namespace neu {
 
         return true;
     }
+
     void Texture::UpdateGui() {}
 }

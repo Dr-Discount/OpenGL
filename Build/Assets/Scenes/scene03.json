@@ -1,18 +1,36 @@
 {
   "actors": [
     {
-      "name": "plane",
+      "name": "skybox",
       "persistent": true,
       "transform": {
-        "position": [ 0, -3.2, 0 ],
+        "position": [ 0, 0, 0 ],
         "rotation": [ 0, 0, 0 ],
-        "scale": [ 2, 2, 2 ]
+        "scale": [ 1, 1, 1 ]
       },
       "components": [
         {
           "type": "ModelRenderer",
-          "model": "models/plane.obj",
-          "material": "materials/rocks.mat"
+          "model": "models/cube.obj",
+          "material": "materials/skybox.mat",
+          "enableDepth": false,
+          "cullFace": "front"
+        }
+      ]
+    },
+    {
+      "name": "knife",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, -2, 2 ],
+        "rotation": [ 0, 0, 90 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "models/Halloween01/Butcher_Knife.fbx",
+          "material": "materials/pumpkin.mat"
         }
       ]
     },
@@ -37,6 +55,38 @@
       ]
     },
     {
+      "name": "skull",
+      "persistent": true,
+      "transform": {
+        "position": [ 2, 2, -1 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "models/Halloween01/Skull_Jaw.fbx",
+          "material": "materials/pumpkin.mat"
+        }
+      ]
+    },
+    {
+      "name": "cross",
+      "persistent": true,
+      "transform": {
+        "position": [ -5, -2, -5 ],
+        "rotation": [ 0, 225, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "models/Halloween01/Gravestone_Cross.fbx",
+          "material": "materials/pumpkin.mat"
+        }
+      ]
+    },
+    {
       "name": "crate",
       "persistent": true,
       "transform": {
@@ -49,10 +99,6 @@
           "type": "ModelRenderer",
           "model": "models/cube.obj",
           "material": "materials/crate.mat"
-        },
-        {
-          "type": "RotationComponent",
-          "rotate": [ 40, 60, 80 ]
         }
       ]
     },
@@ -109,8 +155,41 @@
       "components": [
         {
           "type": "LightComponent",
-          "lightType": "directional",
-          "color": [ 1, 1, 1 ],
+          "color": [ 0, 0, 5 ],
+          "range": 50
+        }
+      ]
+    },
+    {
+      "name": "light2",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, 0, -5 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "color": [ 1, 0, 1 ],
+          "intensity": 1,
+          "range": 100
+        }
+      ]
+    },
+    {
+      "name": "light3",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, 0, 5 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "color": [ 0, 1, 0 ],
+          "intensity": 1,
           "range": 50
         }
       ]

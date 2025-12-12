@@ -100,39 +100,55 @@ namespace neu {
         }
 
         // get programs
-		std::set<Program*> programs;
+		std::set<Program*> programsSet;
         for (auto& actor : m_actors) {
 			auto model = actor->GetComponent<ModelRenderer>();
             if (!model || !model->active) continue;
 
             if (model->material && model->material->program) {
-				programs.insert(model->material->program.get());
+				programsSet.insert(model->material->program.get());
             }
         }
 
-        glm::vec3 m_ambientLight{ 0.2f, 0.2f, 0.2f };
+        std::vector<Program*> programs(programsSet.begin(), programsSet.end());
 
+        if (camera) {
+            PostProcessComponent* postProcess = camera->owner->GetComponent<PostProcessComponent>();
+            bool renderToTexture = camera->outputTexture && (!postProcess || (postProcess && m_postProcess));
+
+            DrawPass(renderer, programs, lights, camera);
+
+            if (renderToTexture && postProcess && postProcess->active) {
+                camera->Clear();
+
+                auto postProcessProgram = Resources().Get<Program>("shaders/postprocess.prog");
+                postProcessProgram->Use();
+                postProcess->Apply(*postProcessProgram);
+                camera->outputTexture->Bind();
+                auto actor = GetActorByName("postprocess");
+                actor->Draw(renderer);
+            }
+        }
+    }
+
+    void Scene::DrawPass(Renderer& renderer, std::vector<Program*>& programs, std::vector<LightComponent*>& lights, CameraComponent* camera) {
         for (auto& program : programs) {
-			program->Use();
-			program->SetUniform("u_ambient_light", m_ambientLight);
+            program->Use();
+            program->SetUniform("u_ambient_light", m_ambientLight);
             program->SetUniform("u_numLights", (int)lights.size());
-			camera->SetProgram(*program);
+            camera->SetProgram(*program);
 
             int index = 0;
             for (auto light : lights) {
                 std::string lightName = "u_lights[" + std::to_string(index) + "]";
-			    if (light) light->SetProgram(*program, lightName, camera->view);
+                if (light) light->SetProgram(*program, lightName, camera->view);
                 index += 1;
             }
         }
 
         // Iterate through all actors in the scene
         for (auto& actor : m_actors) {
-            // Only render actors that are marked as active
-            // This parallels the Update() logic for consistency
             if (actor->active) {
-                // Pass the renderer to each actor
-                // Each actor is responsible for its own drawing implementation
                 actor->Draw(renderer);
             }
         }
@@ -241,7 +257,9 @@ namespace neu {
         m_actors.clear();
     }
 
-    void Scene::UpdateGui() {}
+    void Scene::UpdateGui() {
+        ImGui::Checkbox("Post Process", &m_postProcess);
+    }
 
     /// <summary>
     /// Loads a complete scene from a named configuration file.
@@ -301,6 +319,9 @@ namespace neu {
         // Load base Object properties first (name, active, etc.)
         // This calls the parent class's Read() implementation
         //Object::Read(value);
+
+        SERIAL_READ_NAME(value, "ambient_light", m_ambientLight);
+        SERIAL_READ_NAME(value, "postprocess", m_postProcess);
 
         // SECTION 1: Process prototype definitions
         // Check if the serialized data contains a "prototypes" section

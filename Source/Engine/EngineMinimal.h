@@ -56,12 +56,14 @@
 #include "Renderer/Program.h"
 #include "Renderer/Material.h"
 #include "Renderer/Editor.h"
+#include "Renderer/RenderTexture.h"
 
 // physics
 #include "Physics/Collidable.h"
 
 // components
 #include "Components/CameraComponent.h"
+#include "Components/PostProcessComponent.h"
 #include "Components/LightComponent.h"
 #include "Components/ModelRenderer.h"
 #include "Components/FirstPersonComponent.h"
